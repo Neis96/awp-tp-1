@@ -1,0 +1,39 @@
+/* FUENTES TIPOGRAFICAS */
+@font-face {
+    font-family: "Montserrat-Regular";
+    src: url(../res/font/Montserrat-Regular.otf);
+}
+
+@font-face {
+    font-family: "LeagueGothic-Regular";
+    src: url(../res/font/LeagueGothic-Regular.otf);
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url(../res/font/Montserrat-Bold.otf);
+}
+
+/* ----- paleta de colores usada ------ */
+:root {
+    --texto: #4c4c4c;
+    --mostaza: #f19e24;
+    --blanco: #fff;
+    --gris: rgb(187, 191, 197, 0.2);
+    --input: rgb(187, 191, 197);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.btn {
+    white-space: inherit;
+}
+
+body {
+    font-family: "Montserrat-Regular";
+    color: var(--texto);
+}
+/*--------- header -------------------*/
