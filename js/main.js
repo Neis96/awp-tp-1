@@ -1,3 +1,5 @@
+const d = document;
+
 const api_key = "1de465f4c3966ba3201caea1151b618b";
 const url_clima = "https://api.openweathermap.org/data/2.5/";
 const idioma = "es";
@@ -50,7 +52,7 @@ function buscarCiudad(ciudad) {
       mapapear(result);
     })
     .catch((err) => {
-      console.log("Algo fallo pancho", err);
+      console.log("Algo fallo", err);
     });
 }
 
@@ -115,10 +117,7 @@ function mostrarClima(datos) {
     //   velViento,
     // ]);
   } else {
-    error = `
-            <p>No se encontro la hubicacion que solicito</p>
-        `;
-    main.innerHTML = error;
+    msgError();
   }
 }
 
@@ -138,8 +137,6 @@ function mapapear(datos) {
         `;
 
     iframeMap.innerHTML = mapa;
-  } else {
-    iframeMap.innerHTML = "no anda";
   }
 }
 
@@ -147,4 +144,55 @@ function guardar(nomb) {
   guardado.ciudad = nomb;
 
   localStorage.busqueda = JSON.stringify(guardado);
+}
+
+/*-------------- mensaje de msgError ante igreso incorrecto --------------*/
+/**
+ * funcion arroja un mensaje de error cuando no encuentra una hubicacion al obtener un 404 del fetch
+ */
+function msgError() {
+  let modal = d.createElement("div");
+  modal.setAttribute(
+    "class",
+    "modal position-fixed d-flex  justify-content-center flex-column align-middle"
+  );
+  d.querySelector("body").appendChild(modal);
+
+  let modalDialog = d.createElement("div");
+  modalDialog.setAttribute("class", "modal-dialog");
+  modal.appendChild(modalDialog);
+  1;
+
+  let modalCont = d.createElement("div");
+  modalCont.setAttribute("class", "modal-content text-center");
+  modalDialog.appendChild(modalCont);
+
+  let modalBody = d.createElement("div");
+  modalBody.setAttribute("class", "modal-body text-center");
+  modalCont.appendChild(modalBody);
+
+  let contenido = d.createElement("div");
+  contenido.setAttribute("class", "cont-modal");
+  modalBody.appendChild(contenido);
+
+  let h3 = d.createElement("h3");
+  h3.setAttribute("class", "h2");
+  h3.innerText = "Ooops!";
+  contenido.appendChild(h3);
+
+  let texto = d.createElement("p");
+  texto.setAttribute("class", "m-3");
+  texto.innerText =
+    "No se encontro la ubicacion que solicito vuelva a intentar";
+  contenido.appendChild(texto);
+
+  // btn cerrar
+
+  let btn = d.createElement("button");
+  btn.innerHTML = "Cerrar";
+  btn.setAttribute("class", "btn btnCerrar");
+  btn.onclick = function () {
+    modal.remove();
+  };
+  modalBody.appendChild(btn);
 }

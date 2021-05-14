@@ -164,3 +164,43 @@ footer{
 .twitter {
     background-image: url(../res/img/icon/twitter.svg);
 }
+
+
+/*------------- modal de error -------------- */
+.modal {
+    background-color: rgba(0, 0, 0, .5);
+
+}
+.modal-dialog{
+    pointer-events: all;
+  
+}
+.modal-content{
+      border-radius: 0.5em;
+      overflow: hidden;
+}
+.modal-body{
+     padding: 0;
+}
+.cont-modal{
+    padding: 10em 2em 1em 2em;
+    background-image: url(../res/img/icon/not-found.svg);
+    background-repeat: no-repeat;
+    background-size: 8em;
+    background-position: center 20px;
+}
+.btnCerrar{
+     border-radius: 0;
+    width: 100%;
+    background-color: tomato;
+    font-size: 1em;
+    font-weight: 400;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+}
+.btnCerrar:hover{
+    color: white;
+    text-decoration: none;
+    background-color: tomato;
+}
