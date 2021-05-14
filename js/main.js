@@ -1,12 +1,3 @@
-// let mypromise = new Promise(function (resolve, reject){
-//     setTimeout(() => {
-
-//         resolve('se ejecuto');
-
-//     }, timeout);
-
-// })
-
 const api_key = "1de465f4c3966ba3201caea1151b618b";
 const url_clima = "https://api.openweathermap.org/data/2.5/";
 const idioma = "es";
@@ -23,7 +14,19 @@ const main = document.getElementById("main");
 const inputCiudad = document.getElementById("buscar");
 const iframeMap = document.getElementById("mapa");
 
-let busqueda = iframeMap;
+/*-------------- */
+
+let guardado = { ciudad: "" };
+
+if (localStorage.busqueda) {
+  guardado = JSON.parse(localStorage.busqueda);
+
+  buscarCiudad(guardado.ciudad);
+} else {
+  localStorage.busqueda = JSON.stringify(guardado);
+}
+
+/*-------------- */
 
 btn.addEventListener("click", () => {
   buscarCiudad(inputCiudad.value);
@@ -43,7 +46,7 @@ function buscarCiudad(ciudad) {
     })
     .then((result) => {
       console.log("Datos", result);
-      console.log(mostrarClima(result));
+      mostrarClima(result);
       mapapear(result);
     })
     .catch((err) => {
@@ -67,46 +70,50 @@ function mostrarClima(datos) {
     const icon = datos.weather[0]["icon"];
 
     clima = `
-                <div class="row text-center align-items-center mx-2 mx-md-5 py-5 vent-clima shadow">
-            <div class="col-12 col-md-6 d-flex flex-column-reverse">
-                <div class="">
-                    <h2 class="h4">${nomb}</h2>
-                    <p>Estado: ${estado}</p>
+            <div class="row text-center align-items-center mx-2 mx-md-5">
+              <div class="col-12">
+                <div class="row align-items-center justify-content-around vent-clima shadow mb-5 py-4">
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <h2 class="h2">${nomb}</h2>
+                        <p>Estado: ${estado}</p>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 estado py-4">
+                        <img class="d-inline" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${icon}.svg"
+                            alt="${estado}">
+                        <p class="h1 d-inline align-middle">${temp}°C</p>
+                    </div>
+
                 </div>
-                <div class="estado py-4">
-                    <img class="d-inline" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${icon}.svg" alt="${estado}>
-                    <p class="h1 d-inline align-middle">${temp}°C</p>
+                <div class="datos col-12 ">
+                    <ul class="row list-unstyled justify-content-around">
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 minima">Minima: <span>${tempMin}°C.</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 maxima">maxima: <span>${tempMax}°C.</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 humedad">Humedad: <span>${humedad}%.</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 sen-term">Sen. termica: <span>${senTerm}°C.</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 pre-atmos">Pre. atmosferica: <span>${preAtmos}pa.</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 vel-viento">Vel. del viento:<span>${velViento}km/h.</span></li>
+                    </ul>
+
                 </div>
-
-
             </div>
-            <div class="col-12 col-md-4 text-md-left">
-                <ul class="row list-unstyled">
-                    <li class="col-12 col-md-6 p-2">Min:  ${tempMin}°C.</li>
-                    <li class="col-12 col-md-6 p-2">max: ${tempMax}°C.</li>
-                    <li class="col-12  p-2">Humedad: ${humedad}%.</li>
-                    <li class="col-12  p-2">Sensacion termica: ${senTerm}°C.</li>
-                    <li class="col-12  p-2">Presion atmosferica: ${preAtmos}%.</li>
-                    <li class="col-12  p-2">Vel del viento: ${velViento}km/h.</li>
-                </ul>
 
-            </div>
-        </div>`;
+                `;
+    guardar(nomb);
 
     main.innerHTML = clima;
 
-    console.log([
-      icon,
-      nomb,
-      temp,
-      estado,
-      tempMax,
-      tempMin,
-      humedad,
-      senTerm,
-      preAtmos,
-      velViento,
-    ]);
+    // console.log([
+    //   icon,
+    //   nomb,
+    //   temp,
+    //   estado,
+    //   tempMax,
+    //   tempMin,
+    //   humedad,
+    //   senTerm,
+    //   preAtmos,
+    //   velViento,
+    // ]);
   } else {
     error = `
             <p>No se encontro la hubicacion que solicito</p>
@@ -127,11 +134,17 @@ function mapapear(datos) {
     console.log(nomb, lat, long);
 
     mapa = `
-                <iframe width="100%" height="250" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=${api_key_map}&center=${lat},${long}&zoom=15" allowfullscreen></iframe>
+                <iframe width="100" height="350" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=${api_key_map}&center=${lat},${long}&zoom=12" allowfullscreen></iframe>
         `;
 
     iframeMap.innerHTML = mapa;
   } else {
     iframeMap.innerHTML = "no anda";
   }
+}
+
+function guardar(nomb) {
+  guardado.ciudad = nomb;
+
+  localStorage.busqueda = JSON.stringify(guardado);
 }
