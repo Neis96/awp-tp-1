@@ -16,11 +16,11 @@
 
 /* ----- paleta de colores usada ------ */
 :root {
-    --azul: rgb(38, 70, 83, 1);
+    /* --azul: rgb(38, 70, 83, 1); */
     --blanco: #f6fafb;
-    --gris:#5e6668;
-    --rojo: rgb(255, 94, 91, 1);
-    --gris-claro:#c1c8c7;
+    --azul:#374957;
+    --texto-footer: #bac8d3;
+    --gris-claro:#f4f4f4;
     --texto: #37323e;
 }
 
@@ -43,15 +43,26 @@ body {
 header{
     padding: 5px;
     text-align: center;
-    background-color: var(--gris);
+    background-color: var(--azul);
     color: white;
 }
 
 /* ----------- MAIN ---------------*/
-.buscar{
-    background-color: var(--gris);
+h1{
+    font-family: "LeagueGothic-Regular";
+    
+}
+h2{
+    font-family: "LeagueGothic-Regular";
+    color: var(--azul);
 }
 
+.buscar{
+    background-color: var(--azul);
+}
+.error{
+    border: .5rem solid tomato;
+}
 .buscar form{
     padding: 2em 0;
     
@@ -140,8 +151,14 @@ header{
 }
 /*-------------- FOOTER --------------*/
 footer{
-    background-color: var(--gris);
+    background-color: var(--azul);
 }
+
+.mis-datos ul li{
+    color: var(--texto-footer) ;
+}
+
+
 .btn-redes {
     background-size: 100%;
     background-position: center;

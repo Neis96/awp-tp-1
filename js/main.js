@@ -11,7 +11,7 @@ const v_map = 1;
 const tipo_mapa = "place";
 const layer = "basic";
 
-const btn = document.getElementById("sendButton");
+const btn = document.getElementById("btnBuscar");
 const main = document.getElementById("main");
 const inputCiudad = document.getElementById("buscar");
 const iframeMap = document.getElementById("mapa");
@@ -23,7 +23,9 @@ let guardado = { ciudad: "" };
 if (localStorage.busqueda) {
   guardado = JSON.parse(localStorage.busqueda);
 
-  buscarCiudad(guardado.ciudad);
+  if (guardado.ciudad != "") {
+    buscarCiudad(guardado.ciudad);
+  }
 } else {
   localStorage.busqueda = JSON.stringify(guardado);
 }
@@ -31,8 +33,27 @@ if (localStorage.busqueda) {
 /*-------------- */
 
 btn.addEventListener("click", () => {
-  buscarCiudad(inputCiudad.value);
+  if (validInputs() == true) {
+    console.log(inputCiudad.value);
+    buscarCiudad(inputCiudad.value);
+  } else {
+    console.log(inputCiudad.value);
+  }
 });
+
+function validInputs() {
+  let enviar = true;
+  {
+    if (inputCiudad.value.length == 0) {
+      enviar = false;
+      inputCiudad.classList.add("error");
+    } else {
+      inputCiudad.classList.remove("error");
+    }
+  }
+
+  return enviar;
+}
 
 function buscarCiudad(ciudad) {
   console.log("Palabra", ciudad);
@@ -76,12 +97,12 @@ function mostrarClima(datos) {
               <div class="col-12">
                 <div class="row align-items-center justify-content-around vent-clima shadow mb-5 py-4">
                     <div class="col-12 col-md-4 col-lg-3">
-                        <h2 class="h2">${nomb}</h2>
+                        <h2 class="h1">${nomb}</h2>
                         <p>Estado: ${estado}</p>
                     </div>
                     <div class="col-12 col-md-4 col-lg-3 estado py-4">
                         <img class="d-inline" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${icon}.svg"
-                            alt="${estado}">
+                            alt="estado del clima ${estado}">
                         <p class="h1 d-inline align-middle">${temp}°C</p>
                     </div>
 
