@@ -61,7 +61,7 @@ h2{
     background-color: var(--azul);
 }
 .error{
-    border: .5rem solid tomato;
+    border: 2px solid tomato;
 }
 .buscar form{
     padding: 2em 0;

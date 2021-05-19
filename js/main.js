@@ -13,42 +13,37 @@ const layer = "basic";
 
 const btn = document.getElementById("btnBuscar");
 const main = document.getElementById("main");
-const inputCiudad = document.getElementById("buscar");
+const nombCiudad = document.getElementById("buscar");
 const iframeMap = document.getElementById("mapa");
 
 /*-------------- */
 
-let guardado = { ciudad: "" };
-
 if (localStorage.busqueda) {
-  guardado = JSON.parse(localStorage.busqueda);
+  const guardado = JSON.parse(localStorage.busqueda);
 
-  if (guardado.ciudad != "") {
-    buscarCiudad(guardado.ciudad);
-  }
-} else {
-  localStorage.busqueda = JSON.stringify(guardado);
+  mostrarClima(guardado);
+  mapapear(guardado);
 }
 
 /*-------------- */
 
 btn.addEventListener("click", () => {
   if (validInputs() == true) {
-    console.log(inputCiudad.value);
-    buscarCiudad(inputCiudad.value);
+    console.log(nombCiudad.value);
+    buscarCiudad(nombCiudad.value);
   } else {
-    console.log(inputCiudad.value);
+    console.log(nombCiudad.value);
   }
 });
 
 function validInputs() {
   let enviar = true;
   {
-    if (inputCiudad.value.length == 0) {
+    if (nombCiudad.value.length == 0) {
       enviar = false;
-      inputCiudad.classList.add("error");
+      nombCiudad.classList.add("error");
     } else {
-      inputCiudad.classList.remove("error");
+      nombCiudad.classList.remove("error");
     }
   }
 
@@ -80,7 +75,7 @@ function buscarCiudad(ciudad) {
 function mostrarClima(datos) {
   console.log(datos.cod);
 
-  if (datos.cod != 404) {
+  if (datos.cod == 200) {
     const nomb = datos.name;
     const temp = datos.main.temp;
     const estado = datos.weather[0].description;
@@ -109,34 +104,21 @@ function mostrarClima(datos) {
                 </div>
                 <div class="datos col-12 ">
                     <ul class="row list-unstyled justify-content-around">
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 minima">Minima: <span>${tempMin}°C.</span></li>
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 maxima">maxima: <span>${tempMax}°C.</span></li>
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 humedad">Humedad: <span>${humedad}%.</span></li>
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 sen-term">Sen. termica: <span>${senTerm}°C.</span></li>
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 pre-atmos">Pre. atmosferica: <span>${preAtmos}pa.</span></li>
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 vel-viento">Vel. del viento:<span>${velViento}km/h.</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 minima">Minima: <span>${tempMin}°C</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 maxima">maxima: <span>${tempMax}°C</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 humedad">Humedad: <span>${humedad}%</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 sen-term">Sen. termica: <span>${senTerm}°C</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 pre-atmos">Pre. atmosferica: <span>${preAtmos}pa</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 vel-viento">Vel. del viento:<span>${velViento}km/h</span></li>
                     </ul>
 
                 </div>
             </div>
 
                 `;
-    guardar(nomb);
+    guardar(datos);
 
     main.innerHTML = clima;
-
-    // console.log([
-    //   icon,
-    //   nomb,
-    //   temp,
-    //   estado,
-    //   tempMax,
-    //   tempMin,
-    //   humedad,
-    //   senTerm,
-    //   preAtmos,
-    //   velViento,
-    // ]);
   } else {
     msgError();
   }
@@ -161,10 +143,8 @@ function mapapear(datos) {
   }
 }
 
-function guardar(nomb) {
-  guardado.ciudad = nomb;
-
-  localStorage.busqueda = JSON.stringify(guardado);
+function guardar(datos) {
+  localStorage.busqueda = JSON.stringify(datos);
 }
 
 /*-------------- mensaje de msgError ante igreso incorrecto --------------*/
