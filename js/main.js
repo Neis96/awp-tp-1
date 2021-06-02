@@ -84,7 +84,7 @@ function mostrarClima(datos) {
     const humedad = datos.main.humidity;
     const senTerm = datos.main.feels_like;
     const preAtmos = datos.main.pressure;
-    const velViento = datos.wind.speed;
+    const velViento = (datos.wind.speed * 3.6).toFixed(2);
     const icon = datos.weather[0]["icon"];
 
     clima = `
@@ -108,13 +108,13 @@ function mostrarClima(datos) {
                         <li class="col-12 col-md-4 col-lg-3 mx-2 maxima">maxima: <span>${tempMax}°C</span></li>
                         <li class="col-12 col-md-4 col-lg-3 mx-2 humedad">Humedad: <span>${humedad}%</span></li>
                         <li class="col-12 col-md-4 col-lg-3 mx-2 sen-term">Sen. termica: <span>${senTerm}°C</span></li>
-                        <li class="col-12 col-md-4 col-lg-3 mx-2 pre-atmos">Pre. atmosferica: <span>${preAtmos}pa</span></li>
+                        <li class="col-12 col-md-4 col-lg-3 mx-2 pre-atmos">Pre. atmosferica: <span>${preAtmos}hpa</span></li>
                         <li class="col-12 col-md-4 col-lg-3 mx-2 vel-viento">Vel. del viento:<span>${velViento}km/h</span></li>
                     </ul>
 
                 </div>
-            </div>
-
+                </div>
+              </div>
                 `;
     guardar(datos);
 
