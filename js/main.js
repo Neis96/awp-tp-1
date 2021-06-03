@@ -29,10 +29,8 @@ if (localStorage.busqueda) {
 
 btn.addEventListener("click", () => {
   if (validInputs() == true) {
-    console.log(nombCiudad.value);
+    // console.log(nombCiudad.value);
     buscarCiudad(nombCiudad.value);
-  } else {
-    console.log(nombCiudad.value);
   }
 });
 
